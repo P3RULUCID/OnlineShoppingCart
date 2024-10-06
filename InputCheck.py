@@ -1,3 +1,5 @@
+from datetime import datetime
+
 def non_empty_input(prompt):
     while True:
         input_ = input(prompt).strip()
@@ -26,3 +28,14 @@ def float_input(prompt):
             return input_
         except ValueError:
             print('Enter a valid cost amount')
+
+def validate_date_input(prompt):
+    while True:
+        user_input = input(prompt)
+        try:
+            date_obj = datetime.strptime(user_input, "%B %d, %Y")
+            formatted_date = date_obj.strftime("%B %d, %Y")
+            return formatted_date
+        except ValueError:
+            print("Invalid date format. Please enter the date as 'Month day, year' (e.g., February 1, 2020).")
+

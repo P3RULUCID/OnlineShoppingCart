@@ -1,5 +1,6 @@
 from ShoppingCart import ShoppingCart
 from ItemToPurchase import ItemToPurchase
+from InputCheck import non_empty_input, validate_date_input, int_input
 
 def print_menu(cart: ShoppingCart):
     while True:
@@ -14,13 +15,21 @@ def print_menu(cart: ShoppingCart):
         choice = input().strip().lower()
         
         if choice == 'a':
-            print("TO-DO: Future Feature")
+            item = ItemToPurchase()
+            item.input_item_details()
+            cart.add_item(item)
+            print(f"{item.item_name} has been added to the cart.")
 
         elif choice == 'r':
-            print("TO-DO: Future Feature")
+            item_name = input("Enter the item name to remove: ")
+            cart.remove_item(item_name)
 
         elif choice == 'c':
-            print("TO-DO: Future Feature")
+            item_name = non_empty_input("Enter the item name to change: ")
+            modified_item = ItemToPurchase(item_name=item_name)
+            new_quantity = int_input("Enter the new quantity: ")
+            modified_item.item_quantity = new_quantity
+            cart.modify_item(modified_item)
 
         elif choice == 'i':
             print("\nOUTPUT ITEMS' DESCRIPTIONS")
@@ -38,15 +47,9 @@ def print_menu(cart: ShoppingCart):
             print("Invalid choice. Please try again.")
             
 def main():
-    cart = ShoppingCart("John Doe", "February 1, 2020")
-    item1 = ItemToPurchase("Nike Romaleos", 189.0, 2, "Volt color, Weightlifting shoes")
-    item2 = ItemToPurchase("Chocolate Chips", 3.0, 5, "Semi-sweet")
-    item3 = ItemToPurchase("Powerbeats 2 Headphones", 128.0, 1, "Bluetooth headphones")
-
-    cart.add_item(item1)
-    cart.add_item(item2)
-    cart.add_item(item3)
-    
+    customer_name = non_empty_input("Provide Customer Name:\n")
+    current_date = validate_date_input("Enter a date (e.g., February 1, 2020): ")
+    cart = ShoppingCart(customer_name, current_date)
     print_menu(cart)
 
 if __name__ == "__main__":
